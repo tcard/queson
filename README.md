@@ -42,7 +42,3 @@ X.w.Hello!.w-I.w.It_looks.w_w.like_this...w.I_w.Kind_of_weird.w-X.w.but_better_t
 There's a [PEG.js](https://pegjs.org/) grammar that produces a JSON string that serves as spec:
 
 [queson2json.peg.js](https://github.com/tcard/queson-js/blob/main/queson2json.pegjs)
-
-<script>
-console.log('test');
-</script>
