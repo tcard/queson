@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>QUESON Live</title>
+
+<style type="text/css">
+html {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.pre-error {
+  white-space: pre-wrap;
+  color: #d00;
+}
+
+a {
+  color: #339;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+h1 {
+  font-size: x-large;
+}
+
+h2 {
+  font-size: large;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>Live QUESON↔JSON compiler</h1>
+
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;">
+<div style="width: 400px;">
+  <h2>JSON</h2>
+
+  <textarea id="json" style="width: 100%;" rows="15"></textarea>
+  <pre id="json-error" class="pre-error"></pre>
+</div>
+
+<div style="width: 400px;">
+  <h2>QUESON</h2>
+
+  <textarea id="queson" style="width: 100%;" rows="15"></textarea>
+  <pre id="queson-error" class="pre-error"></pre>
+</div>
+</div>
+
+<footer style="font-size: small;">
+<a href="https://tcard.github.io/queson">About QUESON</a>
+ | 
+<a href="https://github.com/tcard/queson">Source code on GitHub</a>
+</footer>
+
+<script type="module">
+
+import * as queson from 'https://cdn.jsdelivr.net/gh/tcard/queson-js/dist/queson.min.js';
+
+const jsonInput = document.getElementById('json');
+const quesonInput = document.getElementById('queson');
+
+function sync() {
+  document.getElementById('json-error').innerText = '';
+  document.getElementById('queson-error').innerText = '';
+
+  if (!('URLSearchParams' in window)) {
+    return;
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  params.set('queson', quesonInput.value);
+  const path = window.location.pathname + '?' + params.toString();
+  history.replaceState(null, '', path);
+}
+
+function setJSON() {
+  try {
+    jsonInput.value = JSON.stringify(
+      JSON.parse(queson.toJSON(quesonInput.value)),
+      null, "  ",
+    );
+
+    sync();
+  } catch (e) {
+    document.getElementById('queson-error').innerText = e;
+  }
+}
+
+function setQUESON() {
+  try {
+    quesonInput.value = queson.fromJSON(jsonInput.value);
+
+    sync();
+  } catch (e) {
+    document.getElementById('json-error').innerText = e;
+  }
+}
+
+let initialQueson;
+if ('URLSearchParams' in window) {
+    initialQueson = (new URLSearchParams(window.location.search)).get('queson');
+}
+if (!initialQueson) {
+  initialQueson = 'X.w.Hello!.w-I.w.It_looks.w_w.like_this...w.I_w.Kind_of_weird.w-X.w.but_better_than.w-w.the_alternative!.w.X.X';
+}
+quesonInput.value = initialQueson;
+setJSON();
+
+[
+  [ jsonInput, setQUESON ],
+  [ quesonInput, setJSON ],
+].forEach(([ input, set ]) => {
+  [
+    'onkeyup',
+    'onblur',
+    'onchange',
+    'oninput',
+    'onpaste',
+  ].forEach(event => {
+    input[event] = set;
+  });
+});
+
+</script>
+
+</body>
+</html>
