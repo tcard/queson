@@ -1,7 +1,7 @@
 <h1 align="center">QUESON</h1>
 <p align="center"><em><strong>QUE</strong>ry, <strong>U</strong>RL-<strong>E</strong>ncodable <strong>E</strong>CMA<strong>S</strong>cript <strong>O</strong>bject <strong>N</strong>otation</em></p>
 
-<p align="center"><a href="live.html">Online live compiler</a> | <a href="#implementations">Implementations</a></p>
+<p align="center"><a href="https://tcard.github.io/queson/live">Online live compiler</a> | <a href="#implementations">Implementations</a></p>
 
 <hr>
 
