@@ -46,3 +46,16 @@ X.w.Hello!.w-I.w.It_looks.w_w.like_this...w.I_w.Kind_of_weird.w-X.w.but_better_t
 There's a [PEG.js](https://pegjs.org/) grammar that produces a JSON string that serves as spec:
 
 [queson2json.peg.js](https://github.com/tcard/queson-js/blob/main/queson2json.pegjs)
+
+## Design and alternatives
+
+There are multiple alternatives for URL-friendly JSON representations:
+
+* [URLON](https://github.com/cerebral/urlon)
+* [qs](https://www.npmjs.com/package/qs)
+* [Rison](https://rison.io/)
+
+QUESON is different because:
+
+* A QUESON value fits in a single query parameter, so you can use other query parameters.
+* QUESON delimiters don't need percent-encoding, so the structure _can_ be legible by a human, if you squint (most non-alphanumerical characters inside strings will get percent-encoded, though). 
